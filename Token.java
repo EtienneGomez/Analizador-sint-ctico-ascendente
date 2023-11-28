@@ -1,15 +1,36 @@
-from TipoToken import TipoToken
+public class Token {
 
-class Token:
-    def __init__(self, tipo, lexema, posicion=0):
-        self.tipo = tipo
-        self.lexema = lexema
-        self.posicion = posicion
+    final TipoToken tipo;
+    final String lexema;
 
-    def __eq__(self, otro):
-        if not isinstance(otro, Token):
-            return False
-        return self.tipo == otro.tipo
+    final int posicion;
 
-    def __str__(self):
-        return f"{self.tipo} {self.lexema} {self.posicion}"
+    public Token(TipoToken tipo, String lexema, int posicion) {
+        this.tipo = tipo;
+        this.lexema = lexema;
+        this.posicion = posicion;
+    }
+
+    public Token(TipoToken tipo, String lexema) {
+        this.tipo = tipo;
+        this.lexema = lexema;
+        this.posicion = 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Token)) {
+            return false;
+        }
+
+        if(this.tipo == ((Token)o).tipo){
+            return true;
+        }
+
+        return false;
+    }
+
+    public String toString(){
+        return tipo + " " + lexema + " ";
+    }
+}
