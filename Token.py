@@ -1,14 +1,4 @@
-class TipoToken:
-    # Aquí defines los diferentes tipos de tokens. Ejemplos:
-    IDENTIFICADOR = "IDENTIFICADOR"
-    SELECT = "SELECT"
-    FROM = "FROM"
-    DISTINCT = "DISTINCT"
-    COMA = "COMA"
-    PUNTO = "PUNTO"
-    ASTERISCO = "ASTERISCO"
-    EOF = "EOF"
-
+from TipoToken import TipoToken
 
 class Token:
     def __init__(self, tipo, lexema, posicion=0):
@@ -26,5 +16,5 @@ class Token:
 
 
 # Ejemplo de cómo crear un token y imprimirlo
-token = Token(TipoToken.SELECT, "select", 1)
-print(token)  # Imprimirá: SELECT select 1
+##token = Token(TipoToken.SELECT, "select", 1)
+##print(token)  # Imprimirá: SELECT select 1

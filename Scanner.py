@@ -1,4 +1,6 @@
-class TipoToken:
+from enum import Enum
+
+class TipoToken(Enum):
     IDENTIFICADOR = "IDENTIFICADOR"
     SELECT = "SELECT"
     FROM = "FROM"
@@ -14,7 +16,10 @@ class Token:
         self.tipo = tipo
         self.lexema = lexema
         self.posicion = posicion
-
+    def __eq__(self, otro):
+        if not isinstance(otro, Token):
+            return False
+        return self.tipo == otro.tipo
     def __str__(self):
         return f"{self.tipo} {self.lexema} {self.posicion}"
 
