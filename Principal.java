@@ -1,43 +1,46 @@
-from Scanner import Scanner
-from ASA import ASA
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 
-class Principal:
-    existen_errores = False
+public class Principal {
 
-    @staticmethod
-    def main():
-        Principal.ejecutar_prompt()
+    static boolean existenErrores = false;
 
-    @staticmethod
-    def ejecutar_prompt():
-        while True:
-            linea = input(">>> ")
-            if not linea:  # Salir con Ctrl+D o Ctrl+Z en Windows
-                break
-            Principal.ejecutar(linea)
-            Principal.existen_errores = False
+    public static void main(String[] args) throws IOException {
+        ejecutarPrompt();
+    }
 
-    @staticmethod
-    def ejecutar(source):
-        scanner = Scanner(source)
-        tokens = scanner.scan_tokens()
+    private static void ejecutarPrompt() throws IOException{
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
 
-        # Descomenta para imprimir los tokens
-        # for token in tokens:
-        #     print(token)
+        for(;;){
+            System.out.print(">>> ");
+            String linea = reader.readLine();
+            if(linea == null) break;
+            ejecutar(linea);
+            existenErrores = false;
+        }
+    }
 
-        parser = ASA(tokens)
-        parser.parse()
+    private static void ejecutar(String source){
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
 
-    @staticmethod
-    def error(linea, mensaje):
-        Principal.reportar(linea, "", mensaje)
+        Parser parser = new ASA(tokens);
+        parser.parse();
+    }
 
-    @staticmethod
-    def reportar(linea, donde, mensaje):
-        print(f"[linea {linea}] Error {donde}: {mensaje}", file=sys.stderr)
-        Principal.existen_errores = True
+    static void error(int linea, String mensaje){
+        reportar(linea, "", mensaje);
+    }
 
-# Ejecución del programa
-if __name__ == "__main__":
-    Principal.main()
+    private static void reportar(int linea, String donde, String mensaje){
+        System.err.println(
+                "[linea " + linea + "] Error " + donde + ": " + mensaje
+        );
+        existenErrores = true;
+    }
+
+}
